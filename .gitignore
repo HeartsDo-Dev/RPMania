@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# User Inputs
+
+config.json
+bot.db
+bot.db-journal
