@@ -18,16 +18,25 @@
 import discord
 from discord.ext import commands
 import json
+import sqlite3
+import logging
+conn = sqlite3.connect('bot.db')
+conn.text_factory = str
+cursor = conn.cursor()
 
-class Events(commands.Cog):
+
+class Fiches(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         with open('config.json', 'r') as fichier:
             self.config = json.load(fichier)
 
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        print("Yeah, cette partie sert à rien car elle n'est pas codée !")
 
-    @commands.Cog.listener()
-    async def on_message(message)
+    @commands.command()
+    async def roll(self, ctx, idontkown):
+        logging.info("LOL, je sert à rien !")
+
+
+    @commands.command()
+    async def addroll(self, ctx, row:str="None", name:str:"None"):
+        

@@ -69,14 +69,25 @@ class Utils(commands.Cog):
 
 
     @commands.command()
-    async def suggest(self, ctx, *, name: str = "None"):
+    async def suggest(self, ctx, cat:str="None", *, name:str="None"):
+        if cat == "None":
+            return await ctx.send("Tu veut que je l'envoie ou server ou bot, à toi de voir je t'attend !")
+        if cat =! "server" or "bot":
+            return await ctx.send("Alors c'est bien de me dire où mais si je connais pas je connais pas :shrug: !")
         if name == "None":
             return await ctx.send("Votre message ne contient pas un nom, je vais pas créer un ticket pour 0 idée.")
-        try:
-            trello.cards.new(name, self.config['trello']['arrival'], "Demandée par " + ctx.author.name + "#" + ctx.author.discriminator)
-        except HTTPError:
-            return await ctx.send("Erreur inconnue !")
-        await ctx.send("Votre suggestion à été transmis sur Trello, merci !")
+        if cat == "server":
+            try:
+                trello.cards.new(name, self.config['trello']['arrivals'], "Demandée par " + ctx.author.name + "#" + ctx.author.discriminator)
+            except HTTPError:
+                return await ctx.send("Erreur HTTP !")
+            return await ctx.send("Votre suggestion pour le serveur à été transmis sur Trello, merci !")
+        if cat == "bot":
+            try:
+                trello.cards.new(name, self.config['trello']['arrivalb']), "Demandée par " + ctx.author.name + "#" + ctx.author.discriminator)
+            except HTTPError:
+                return await ctx.send("Erreur HTTP !")
+            return await ctx.send("Votre suggestion pour le bot à été transmis sur Trello, merci !")
 
 
 def setup(bot):
