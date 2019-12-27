@@ -30,7 +30,8 @@ token = config['bot']['token']
 
 
 initial_extensions = ['jishaku',
-                      'cogs.utils']
+                      'cogs.utils',
+                      'cogs.entrainements']
 bot = commands.Bot(command_prefix='gm!')
 
 
