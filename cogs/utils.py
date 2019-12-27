@@ -121,7 +121,7 @@ class Utils(commands.Cog):
                 self.phab.maniphest.edit(transactions=respond)
             except APIError:
                 return await ctx.send("Erreur de l'API, merci de contacter l'administrateur du bot !")
-            return await ctx.send("Votre suggestion pour le serveur à été transmis sur Trello, merci !")
+            return await ctx.send("Votre suggestion pour le serveur à été transmis sur Phabricator, merci !")
         if cat == "bot":
             try:
                 respond = [
