@@ -94,7 +94,6 @@ class Utils(commands.Cog):
         await ctx.send(embed=embed)
 
 
-
     @commands.command()
     async def suggest(self, ctx, cat:str="None", *, name:str="None"):
         '''Permet de mettre une suggestion sur un des boards Phabricator du serveur'''
@@ -145,6 +144,14 @@ class Utils(commands.Cog):
         else:
             return await ctx.send("Alors c'est bien de me dire où mais si je connais pas je connais pas :shrug: ! (server ou bot)")
 
+    
+    @commands.command()
+    @commands.has_role("Admin")
+    async def speakgm(self, ctx, * , message:str="None"):
+        if message == "None":
+            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
+        await ctx.send("**💬 [Narateur] {}**: {}".format(ctx.author.name, message))
+        await ctx.message.delete()
 
 
 def setup(bot):

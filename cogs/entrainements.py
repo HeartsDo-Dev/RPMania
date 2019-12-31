@@ -47,8 +47,9 @@ class Entrainements(commands.Cog):
         with open('config.json', 'r') as fichier:
             self.config = json.load(fichier)
         schedule.every().day.at("23:59").do(reset_counter)
-        launchtime = threading.Thread(target=schedl_start)
-        launchtime.start()
+        # launchtime = threading.Thread(target=schedl_start) Temporaire le temps que je trouve la résolution du bug
+        # launchtime.start()
+
 
     @commands.command()
     @commands.has_role("Admin")
