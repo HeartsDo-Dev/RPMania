@@ -161,8 +161,9 @@ class Utils(commands.Cog):
             return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
         if anon == "anon":
             await ctx.send("**💬 [Staff] Annoyme**: {}".format(message))
+            return await ctx.message.delete()
         else:
-            await ctx.send("**💬 [Staff] {}**: {}".format(ctx.author.name, message))
+            return await ctx.send("**💬 [Staff] {}**: {}".format(ctx.author.name, message))
         await ctx.message.delete()
 
 
