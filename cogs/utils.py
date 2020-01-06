@@ -152,6 +152,18 @@ class Utils(commands.Cog):
             return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
         await ctx.send("**💬 [Narateur] {}**: {}".format(ctx.author.name, message))
         await ctx.message.delete()
+    
+
+    @commands.command()
+    @commands.has_role("Admin")
+    async def speakstaff(self, ctx, anon:str="None", *, message:str="None"):
+        if message == "None":
+            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
+        if anon == "anon":
+            await ctx.send("**💬 [Staff] Annoyme**: {}".format(message))
+        else:
+            await ctx.send("**💬 [Staff] {}**: {}".format(ctx.author.name, message))
+        await ctx.message.delete()
 
 
 def setup(bot):
