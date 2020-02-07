@@ -32,8 +32,8 @@ class Utils(commands.Cog):
             self.config = json.load(fichier)
         self.phab = Phabricator(host=self.config['phab']['host'], token=self.config['phab']['token'])
         self.phab.update_interfaces()
-        self.launchtime = threading.Thread(target=cogs.entrainements.schedl_start)
-        self.launchtime.start()
+        # self.launchtime = threading.Thread(target=cogs.entrainements.schedl_start)
+        # self.launchtime.start()
 
 
     @commands.command()
