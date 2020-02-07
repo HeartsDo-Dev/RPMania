@@ -22,6 +22,8 @@ import urllib
 from xml.etree import ElementTree as ET
 import logging
 from phabricator import Phabricator
+import schedule
+import threading
 
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -30,6 +32,8 @@ class Utils(commands.Cog):
             self.config = json.load(fichier)
         self.phab = Phabricator(host=self.config['phab']['host'], token=self.config['phab']['token'])
         self.phab.update_interfaces()
+        self.launchtime = threading.Thread(target=cogs.entrainements.schedl_start)
+        self.launchtime.start()
 
 
     @commands.command()
@@ -118,7 +122,7 @@ class Utils(commands.Cog):
                     }
                 ]
                 self.phab.maniphest.edit(transactions=respond)
-            except APIError:
+            except Phabricator.APIError:
                 return await ctx.send("Erreur de l'API, merci de contacter l'administrateur du bot !")
             return await ctx.send("Votre suggestion pour le serveur à été transmis sur Phabricator, merci !")
         if cat == "bot":
@@ -138,7 +142,7 @@ class Utils(commands.Cog):
                     }
                 ]
                 self.phab.maniphest.edit(transactions=respond)
-            except APIError:
+            except Phabricator.APIError:
                 return await ctx.send("Erreur de l'API, merci de contacter l'administrateur du bot !")
             return await ctx.send("Votre suggestion pour le bot à été transmis sur Phabricator, merci !")
         else:
@@ -146,25 +150,32 @@ class Utils(commands.Cog):
 
     
     @commands.command()
-    @commands.has_role("Admin")
+    @commands.has_role("Conseil des Divins")
     async def speakgm(self, ctx, * , message:str="None"):
         if message == "None":
-            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
+            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !", delete_after=10)
         await ctx.send("**💬 [Narateur] {}**: {}".format(ctx.author.name, message))
         await ctx.message.delete()
     
 
     @commands.command()
-    @commands.has_role("Admin")
+    @commands.has_role("Conseil des Divins")
     async def speakstaff(self, ctx, anon:str="None", *, message:str="None"):
         if message == "None":
-            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !")
+            return await ctx.send("Votre message ne contient pas de texte, merci de retaper la commande !", delete_after=10)
         if anon == "anon":
-            await ctx.send("**💬 [Staff] Annoyme**: {}".format(message))
+            await ctx.send("**💬 [Staff] Anonyme:** {}".format(message))
             return await ctx.message.delete()
         else:
-            return await ctx.send("**💬 [Staff] {}**: {}".format(ctx.author.name, message))
-        await ctx.message.delete()
+            await ctx.send("**💬 [Staff] {}:** {}".format(ctx.author.name, message))
+            return await ctx.message.delete()
+
+
+    @commands.command()
+    @commands.is_owner()
+    async def shutdown(self, ctx):
+        await ctx.send("OK, je vais m'éteindre tranquillement !")
+        await ctx.bot.logout()
 
 
 def setup(bot):

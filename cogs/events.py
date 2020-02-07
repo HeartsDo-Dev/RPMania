@@ -32,12 +32,12 @@ class Events(commands.Cog):
 
 
     @commands.command()
-    @commands.has_role("Admin")
+    @commands.has_role("Conseil des Divins")
     async def create_event(self, ctx, name:str="None", memberteam:int=0, teams:int=1):
         if name == "None":
-            return await ctx.send("Votre évenement n'a pas de nom, sans nom je ne ferai rien !")
+            return await ctx.send("Votre évenement n'a pas de nom, sans nom c'est trise !")
         if memberteam == 0:
-            return await ctx.send("Il me faut savoir combien peuvent rejoindre un groupe, sinon je ne ferai rien !")
+            return await ctx.send("Il me faut savoir combien peuvent rejoindre un groupe, sinon tu veut être seul face à ton destin !")
 
         cursor.execute("""INSERT INTO events(idevent, name, teams, maxT, term)
         VALUES(?, ?, ?, ?, ?)""", (idrecup, ))
